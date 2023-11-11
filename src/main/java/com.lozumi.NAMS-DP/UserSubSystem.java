@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+package com.lozumi.NAMS-DP;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
