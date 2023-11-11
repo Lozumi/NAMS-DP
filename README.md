@@ -3,6 +3,7 @@ A Java project.
 
 ## Function
 NASM using design patterns.
+In formatting templates,used String.format() to let the code be more precise.
 ![uml.png](src%2Fmain%2Fresources%2Fuml.png)
 
 ## Todo
@@ -16,4 +17,4 @@ NASM using design patterns.
 ### Process
 - [x] Build classes
 - [x] Test
-- [ ] Write Javadoc
+- [x] Write Javadoc
