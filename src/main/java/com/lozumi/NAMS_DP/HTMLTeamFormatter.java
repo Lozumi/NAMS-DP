@@ -1,4 +1,4 @@
-package com.lozumi.NAMS-DP
+package com.lozumi.NAMS_DP;
 
 class HTMLTeamFormatter {
 }

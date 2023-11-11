@@ -1,3 +1,4 @@
+package com.lozumi.NAMS_DP;
 
 public class PlainTextTeamFormatter implements TeamFormatter {
 	
