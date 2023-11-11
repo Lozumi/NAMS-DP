@@ -2,15 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.concurrent.Semaphore;
 
 /**
- *User Subsystem
+ * 用户子系统类
+ *
+ * <p>该类实现了一个简单的用户子系统，用于使用不同格式展示团队信息。
  *
  * @author ChenJing, Lozumi
  * @version 1.1
- *
- * Show the team info in any of the three types.
  */
 public class UserSubSystem {
 	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -21,17 +20,17 @@ public class UserSubSystem {
 	private TeamFormatter teamFormatter;
 
 	/**
-	 * Initialize instance variable team
+	 * 初始化成员变量 team
 	 */
 	private UserSubSystem() {
 		loadTeam();
 	}
 
 	/**
-	 * Starts the application
+	 * 启动应用程序
 	 *
-	 * @param args the arguments passed by the operating system's process startup arguments.
-	 * @throws IOException When io operation is not supported, this exception is thrown.
+	 * @param args 操作系统进程启动参数
+	 * @throws IOException 不支持 IO 操作时抛出该异常
 	 */
 	public static void main(String[] args) throws IOException {
 		UserSubSystem userSubSystem = new UserSubSystem();
@@ -39,19 +38,17 @@ public class UserSubSystem {
 	}
 
 	/**
-	 * Present the user with a menu of options and execute the selected task
+	 * 向用户展示一个选项菜单，并执行用户选择的任务
 	 *
-	 * @throws IOException When io operation is not supported, this exception is thrown.
-	 * @throws InterruptedException When sleep operation is interrupted, this exception is thrown.
+	 * @throws IOException 不支持 IO 操作时抛出该异常
 	 */
 	private void run() throws IOException {
-		// TODO:
 		while (true) {
 			try {
-				int input = getChoice();
-				switch (input) {
+				int userChoice = getChoice();
+				switch (userChoice) {
 					case 0:
-						stdErr.println("Quiting...");
+						stdErr.println("感谢使用！");
 						return;
 					case 1:
 						setTeamFormatter(PlainTextTeamFormatter.getSingletonInstance());
@@ -63,66 +60,66 @@ public class UserSubSystem {
 						setTeamFormatter(XMLTeamFormatter.getSingletonInstance());
 						break;
 					default:
-						stdErr.println(input + " is not a valid operation code.");
+						stdErr.println(userChoice + " 是无效的操作代码。");
 						break;
 				}
 				displayTeam();
-				Thread.sleep(400); //Println methods are asynchronous, so the option menu may display before team information is displayed completely. Simply sleep for a short time to avoid this situation.
+				Thread.sleep(400); // println 方法是异步的，因此选项菜单可能在团队信息完全显示之前显示。简单休眠一小段时间以避免这种情况。
 			} catch (IOException exception) {
-				stdErr.println("Exception thrown with message of " + exception.getMessage());
-			}catch (InterruptedException exception)
-			{
-				stdErr.println("Sleep operation interrupted.");
+				stdErr.println("异常: " + exception.getMessage());
+			} catch (InterruptedException interruptedException) {
+				stdErr.println("操作被中断。");
 			}
-
 		}
 	}
 
 	/**
-	 * Change the current formatter by updating the instance variable teamFormatter
-	 * with the object specified in the parameter formatter
+	 * 通过更新 formatter 参数指定的对象来更改当前 formatter
 	 *
-	 * @param formatter the specified formatter used to format team string.
+	 * @param formatter 用于格式化团队字符串的指定 formatter
 	 */
 	private void setTeamFormatter(TeamFormatter formatter) {
-		// TODO:
 		teamFormatter = formatter;
 	}
 
 	/**
-	 * Display a menu of options and verifies the user's choice
+	 * 显示选项菜单并验证用户的选择
 	 *
-	 * @return the choice that the user input indicates.
-	 * @throws IOException When io operation is not supported, this exception is thrown.
+	 * @return 用户输入的选项代码
+	 * @throws IOException 不支持 IO 操作时抛出该异常
 	 */
 	private int getChoice() throws IOException {
-		int input;
+		int userChoice;
 		do {
 			try {
 				stdErr.println();
-				stdErr.print("[0] Quit\n" + "[1] Display team (Plain Text)\n" + "[2] Display team (HTML)\n"
-						+ "[3] Display team (XML)\n" + "choice> ");
+				stdErr.print("""
+                        [0] 退出
+                        [1] 显示团队 (纯文本)
+                        [2] 显示团队 (HTML)
+                        [3] 显示团队 (XML)
+                        请选择>\s""");
 				stdErr.flush();
 
-				input = Integer.parseInt(stdIn.readLine());
+				userChoice = Integer.parseInt(stdIn.readLine());
 
 				stdErr.println();
 
-				if (0 <= input && 3 >= input) {
+				if (0 <= userChoice && 3 >= userChoice) {
 					break;
 				} else {
-					stdErr.println("Invalid choice:  " + input);
+					stdErr.println("无效的选择:  " + userChoice);
 				}
 			} catch (NumberFormatException nfe) {
 				stdErr.println(nfe);
 			}
 		} while (true);
 
-		return input;
+		return userChoice;
 	}
 
 	/**
-	 * Initialize the team object
+	 * 初始化 team 对象
 	 */
 	private void loadTeam() {
 		Student creator = new Student("stu_01", "小明", "13025631489", "425@nwpu.deu.cn", "2020136924", false, "大二",
@@ -135,13 +132,9 @@ public class UserSubSystem {
 	}
 
 	/**
-	 * Display the team information in the standard output using the method
-	 * teamFormatter.formatTeam() to obtain the team information in the current
-	 * format
+	 * 使用 teamFormatter.formatTeam() 方法在标准输出中显示团队信息
 	 */
 	private void displayTeam() {
-		// TODO:
 		stdOut.println(teamFormatter.formatTeam(team));
 	}
-
 }

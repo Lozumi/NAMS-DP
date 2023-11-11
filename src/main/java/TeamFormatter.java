@@ -1,10 +1,11 @@
 /**
- * Team Formatter
+ * 团队格式化接口
+ *
+ * <p>提供团队格式化类的方法。
+ *
  * @author Lozumi
  * @version 1.0
- *
- * Provides methods for team formatter classes.
  */
 public interface TeamFormatter {
-    public String formatTeam(Team team);
+    String formatTeam(Team team);
 }

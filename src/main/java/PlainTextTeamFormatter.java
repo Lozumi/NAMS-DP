@@ -1,22 +1,37 @@
 /**
- * Plain Text Team Formatter
+ * 纯文本团队格式化类
+ *
+ * <p>该类实现了 {@link TeamFormatter} 接口，用于生成包含团队信息的纯文本字符串。
+ *
+ * <p>采用单例模式确保只有一个实例。
+ *
  * @author Lozumi
  * @version 1.0
- *
- * Generate string including team info by plain text.
  */
 public class PlainTextTeamFormatter implements TeamFormatter {
 	private static PlainTextTeamFormatter singletonInstance;
 
 	private PlainTextTeamFormatter() {}
 
+	/**
+	 * 获取类的单例实例
+	 *
+	 * @return PlainTextTeamFormatter 的单例实例
+	 */
 	public static synchronized PlainTextTeamFormatter getSingletonInstance() {
-		if(singletonInstance == null) {
+		if (singletonInstance == null) {
 			singletonInstance = new PlainTextTeamFormatter();
 		}
 		return singletonInstance;
 	}
 
+	/**
+	 * 格式化团队信息为纯文本字符串
+	 *
+	 * @param team 要格式化的团队对象
+	 * @return 包含团队信息的纯文本字符串
+	 * 相比原定义，使用了 String.format 来使字符串拼接更简洁
+	 */
 	@Override
 	public String formatTeam(Team team) {
 		StringBuilder sb = new StringBuilder();
@@ -47,6 +62,4 @@ public class PlainTextTeamFormatter implements TeamFormatter {
 
 		return sb.toString();
 	}
-
-
 }
