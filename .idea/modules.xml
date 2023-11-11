@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/NAMS-DP.iml" filepath="$PROJECT_DIR$/.idea/NAMS-DP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/resources/classes/classes.iml" filepath="$PROJECT_DIR$/src/main/resources/classes/classes.iml" />
     </modules>
   </component>
 </project>

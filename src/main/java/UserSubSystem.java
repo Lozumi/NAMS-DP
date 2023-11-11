@@ -1,20 +1,21 @@
-package com.lozumi.NAMS_DP;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.concurrent.Semaphore;
 
 /**
- * 用户子系统类
+ *User Subsystem
  *
- * @author "ChenJing"
- * @version 1.0
+ * @author ChenJing, Lozumi
+ * @version 1.1
  *
+ * Show the team info in any of the three types.
  */
 public class UserSubSystem {
 	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	private static PrintWriter stdOut = new PrintWriter(System.out, true);
 	private static PrintWriter stdErr = new PrintWriter(System.err, true);
-
 	private Team team;
 
 	private TeamFormatter teamFormatter;
@@ -29,8 +30,8 @@ public class UserSubSystem {
 	/**
 	 * Starts the application
 	 *
-	 * @param args
-	 * @throws IOException
+	 * @param args the arguments passed by the operating system's process startup arguments.
+	 * @throws IOException When io operation is not supported, this exception is thrown.
 	 */
 	public static void main(String[] args) throws IOException {
 		UserSubSystem userSubSystem = new UserSubSystem();
@@ -40,27 +41,59 @@ public class UserSubSystem {
 	/**
 	 * Present the user with a menu of options and execute the selected task
 	 *
-	 * @throws IOException
+	 * @throws IOException When io operation is not supported, this exception is thrown.
+	 * @throws InterruptedException When sleep operation is interrupted, this exception is thrown.
 	 */
 	private void run() throws IOException {
 		// TODO:
+		while (true) {
+			try {
+				int input = getChoice();
+				switch (input) {
+					case 0:
+						stdErr.println("Quiting...");
+						return;
+					case 1:
+						setTeamFormatter(PlainTextTeamFormatter.getSingletonInstance());
+						break;
+					case 2:
+						setTeamFormatter(HTMLTeamFormatter.getSingletonInstance());
+						break;
+					case 3:
+						setTeamFormatter(XMLTeamFormatter.getSingletonInstance());
+						break;
+					default:
+						stdErr.println(input + " is not a valid operation code.");
+						break;
+				}
+				displayTeam();
+				Thread.sleep(400); //Println methods are asynchronous, so the option menu may display before team information is displayed completely. Simply sleep for a short time to avoid this situation.
+			} catch (IOException exception) {
+				stdErr.println("Exception thrown with message of " + exception.getMessage());
+			}catch (InterruptedException exception)
+			{
+				stdErr.println("Sleep operation interrupted.");
+			}
+
+		}
 	}
 
 	/**
 	 * Change the current formatter by updating the instance variable teamFormatter
 	 * with the object specified in the parameter formatter
 	 *
-	 * @param formatter
+	 * @param formatter the specified formatter used to format team string.
 	 */
 	private void setTeamFormatter(TeamFormatter formatter) {
 		// TODO:
+		teamFormatter = formatter;
 	}
 
 	/**
 	 * Display a menu of options and verifies the user's choice
 	 *
-	 * @return
-	 * @throws IOException
+	 * @return the choice that the user input indicates.
+	 * @throws IOException When io operation is not supported, this exception is thrown.
 	 */
 	private int getChoice() throws IOException {
 		int input;
@@ -108,6 +141,7 @@ public class UserSubSystem {
 	 */
 	private void displayTeam() {
 		// TODO:
+		stdOut.println(teamFormatter.formatTeam(team));
 	}
 
 }

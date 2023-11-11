@@ -8,12 +8,12 @@ NASM using design patterns.
 ## Todo
 ### Classes
 - [x] UserSubSystem
-- [ ] TeamFormatter
-- [ ] com.lozumi.NAMS_DP.PlainTextTeamFormatter
-- [ ] HTMLTeamFormatter
-- [ ] com.lozumi.NAMS_DP.XMLTeamFormatter
+- [x] TeamFormatter
+- [x] PlainTextTeamFormatter
+- [x] HTMLTeamFormatter
+- [x] XMLTeamFormatter
 
 ### Process
-- [ ] Build classes
-- [ ] Test
+- [x] Build classes
+- [x] Test
 - [ ] Write Javadoc
